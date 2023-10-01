@@ -1,6 +1,6 @@
 <template>
   <form v-on:submit.prevent>
-    <h4>Создать пользователя</h4>
+    <h3>Создать пользователя</h3>
     <input v-model="user.name" class="input" type="text" placeholder="Имя" />
     <input
       v-model="user.surname"
@@ -9,7 +9,9 @@
       placeholder="Фамилия"
     />
     <input v-model="user.city" class="input" type="text" placeholder="Город" />
-    <button class="btn" v-on:click="createUser">Создать</button>
+    <my-button v-on:click="createUser" style="margin-top: 15px"
+      >Создать</my-button
+    >
   </form>
 </template>
 
@@ -43,15 +45,6 @@ export default {
   border: 1px solid teal;
   padding: 10px 15px;
   margin-top: 15px;
-}
-
-.btn {
-  margin-top: 15px;
-  align-self: flex-end;
-  padding: 10px 15px;
-  background: none;
-  color: teal;
-  border: 1px solid teal;
 }
 
 form {

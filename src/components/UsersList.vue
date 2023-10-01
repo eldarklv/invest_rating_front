@@ -1,15 +1,17 @@
 <template>
-  <div class="user" v-for="user in users" :key="user">
-    <div>
-      <strong>Имя: </strong>
-      {{ user.name }} {{ user.surname }}
-    </div>
-    <div><strong>Город: </strong>{{ user.city }}</div>
-    <div><strong>Баллы: </strong>{{ user.scores }}</div>
+  <div>
+    <h3>Список пользователей</h3>
+    <UserItem
+      v-for="user in users"
+      v-bind:key="user.id"
+      v-bind:user="user"
+    ></UserItem>
   </div>
 </template>
 
 <script>
+import UserItem from "./UserItem.vue";
+
 export default {
   props: {
     users: {
@@ -17,13 +19,8 @@ export default {
       required: true,
     },
   },
+  components: { UserItem },
 };
 </script>
 
-<style scoped>
-.user {
-  padding: 15px;
-  border: 2px solid teal;
-  margin-top: 15px;
-}
-</style>
+<style></style>
