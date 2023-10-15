@@ -1,14 +1,9 @@
 <template>
   <form v-on:submit.prevent>
     <h3>Создать пользователя</h3>
-    <input v-model="user.name" class="input" type="text" placeholder="Имя" />
-    <input
-      v-model="user.surname"
-      class="input"
-      type="text"
-      placeholder="Фамилия"
-    />
-    <input v-model="user.city" class="input" type="text" placeholder="Город" />
+    <my-input v-model="user.name" type="text" placeholder="Имя" />
+    <my-input v-model="user.surname" type="text" placeholder="Фамилия" />
+    <my-input v-model="user.city" type="text" placeholder="Город" />
     <my-button v-on:click="createUser" style="margin-top: 15px"
       >Создать</my-button
     >
@@ -28,7 +23,7 @@ export default {
   },
   methods: {
     createUser() {
-      this.user.id = Date.now();
+      this.user._id = Date.now();
       this.$emit("createUser", this.user);
       this.user = {
         name: "",
@@ -41,12 +36,6 @@ export default {
 </script>
 
 <style>
-.input {
-  border: 1px solid teal;
-  padding: 10px 15px;
-  margin-top: 15px;
-}
-
 form {
   display: flex;
   flex-direction: column;

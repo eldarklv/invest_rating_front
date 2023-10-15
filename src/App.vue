@@ -1,11 +1,23 @@
 <template>
   <div class="app">
-    <UserForm v-on:createUser="createUser"></UserForm>
-    <UsersList v-bind:users="users"></UsersList>
+    <h1>Инвест рейтинг</h1>
+    <my-button v-on:click="showDialog" style="margin: 15px 0"
+      >Создать пользователя</my-button
+    >
+    <my-dialog v-model:show="dialogVisible">
+      <UserForm v-on:createUser="createUser"></UserForm>
+    </my-dialog>
+    <UsersList
+      v-bind:users="users"
+      v-on:remove="removeUser"
+      v-if="isUsersLoading === false"
+    ></UsersList>
+    <div v-else-if="isUsersLoading === true">Идет загрузка...</div>
   </div>
 </template>
 
 <script>
+import axios from "axios";
 import UserForm from "./components/UserForm.vue";
 import UsersList from "./components/UsersList.vue";
 
@@ -16,35 +28,36 @@ export default {
   },
   data() {
     return {
-      users: [
-        {
-          id: 1,
-          name: "Eldar",
-          surname: "Kuluev",
-          city: "Oktyabrsky",
-          scores: 14,
-        },
-        {
-          id: 2,
-          name: "John",
-          surname: "Sina",
-          city: "Las Vegas",
-          scores: 20,
-        },
-        {
-          id: 3,
-          name: "Mark",
-          surname: "Kotl",
-          city: "New York",
-          scores: 8,
-        },
-      ],
+      users: [],
+      dialogVisible: false,
+      isUsersLoading: false,
     };
   },
   methods: {
     createUser(user) {
       this.users.push(user);
+      this.dialogVisible = false;
     },
+    removeUser(user) {
+      this.users = this.users.filter((u) => u._id !== user._id);
+    },
+    showDialog() {
+      this.dialogVisible = true;
+    },
+    async getUsers() {
+      try {
+        this.isUsersLoading = true;
+        const response = await axios.get("http://localhost:3000/users");
+        this.users = response.data;
+      } catch (error) {
+        console.log(error);
+      } finally {
+        this.isUsersLoading = false;
+      }
+    },
+  },
+  mounted() {
+    this.getUsers();
   },
 };
 </script>

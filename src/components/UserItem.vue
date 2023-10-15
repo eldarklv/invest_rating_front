@@ -1,6 +1,6 @@
 <template>
   <div class="user">
-    <div><strong>ID: </strong>{{ user.id }}</div>
+    <div><strong>ID: </strong>{{ user._id }}</div>
     <div>
       <strong>Имя: </strong>
       {{ user.name }} {{ user.surname }}
@@ -8,7 +8,7 @@
     <div><strong>Город: </strong>{{ user.city }}</div>
     <div><strong>Баллы: </strong>{{ user.scores }}</div>
     <div>
-      <my-button>Удалить</my-button>
+      <my-button v-on:click="$emit('remove', user)">Удалить</my-button>
     </div>
   </div>
 </template>
